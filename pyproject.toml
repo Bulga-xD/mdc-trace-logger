@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mdc_trace_logger"]
+
+[project]
+name = "mdc-trace-logger"
+version = "0.2.0"
+description = "Multi-threaded MDC logging with ECS format"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+readme = "README.md"
+requires-python = ">=3.7"
+
+dependencies = [
+    "ecs-logging==2.2.0", "pyyaml==6.0.2"
+]
+
+[project.optional-dependencies]
+test = ["black", "isort[colors]", "mypy", "pytest", "pytest-cov", "coverage"]
+
+[project.urls]
+Source = "https://github.com/Bulga-xD/mdc_logger"
+
+[tool.black]
+exclude = '(\.git|\.mypy_cache|\.venv)'
+include = '\.pyi?$'
+target-version = ['py311']
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+
+[tool.pytest.ini_options]
+addopts = "--cache-clear --log-cli-level=DEBUG --strict-markers --cov-branch --cov-fail-under=80"
+junit_family = "xunit2"
+log_format = "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+testpaths = ["tests"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+omit = [
+  "**/tests/*",
+  "**/mdc_logger/config.py"
+]
